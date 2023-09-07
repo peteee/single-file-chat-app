@@ -80,7 +80,7 @@
 
         <p id="messages">l o a d i n g</p>
 
-        <form id="msg-box" action="views/chat.php?post" method="post">
+        <form id="msg-box"> <!-- action="views/chat.php?post" method="post" -->
             <input type="text" placeholder="type a message" name="msg">
             <input type="submit" value="Post it!">
         </form>
@@ -88,6 +88,11 @@
         <script>
 
             const myMessages = document.querySelector("#messages");
+
+            let lastMsgId = 0;
+            /**
+             * Load ALL messages
+             */
 
             //let msgData; 
             function loadMessages() {
@@ -100,7 +105,7 @@
 
                     data.forEach(element => {
                         let msgBox = `
-                            <span class="msg">
+                            <span class="msg" data-id="${element.id}">
                                 ${element.message}<br>
                                 <i>${element.uname}</i>
                             </span>
@@ -109,11 +114,66 @@
                         myMessages.innerHTML += msgBox;
                     });
 
-                    
+                    lastMsgId = data[data.length-1].id;
 
+                    
                 });
             }
             loadMessages();
+
+            /**
+             * Sending A message
+             */
+
+             const chatForm = document.getElementById("msg-box");
+
+             chatForm.addEventListener("submit", (event) => {
+                event.preventDefault();
+
+                let chatFormData = new FormData(chatForm);
+
+                fetch("views/chat.php?post", {body: chatFormData, method: "POST"})
+                  .then((res) => {
+                    refreshMessages();
+                  });
+
+                chatForm.reset();
+             });
+
+             /**
+              * Refreshing the messages
+              */
+
+             function refreshMessages() {
+
+                let refreshFormData = new FormData();
+                refreshFormData.set('lastMsgId', lastMsgId);
+
+                fetch("views/chat.php?resfreshMessages", {body: refreshFormData, method: "POST"})
+                  .then((res) => res.json())
+                  .then((data) => {
+                    console.log(data);
+
+                    data.forEach(element => {
+                        let msgBox = `
+                            <span class="msg" data-id="${element.id}">
+                                ${element.message}<br>
+                                <i>${element.uname}</i>
+                            </span>
+                            <br>
+                        `;
+                        myMessages.innerHTML += msgBox;
+                    });
+
+                    lastMsgId = data[data.length-1].id;
+                  });
+
+             }
+
+
+
+
+
         </script>
 
         <a href="logout.php">Log me out</a>
