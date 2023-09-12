@@ -35,9 +35,9 @@
 
         $user_data = mysqli_fetch_assoc($result);
 
-        echo("<pre>");
-        var_dump($user_data);
-        echo("</pre>");
+        // echo("<pre>");
+        // var_dump($user_data);
+        // echo("</pre>");
 
 
 
@@ -52,7 +52,7 @@
             //Boolean switch type variable
             $_SESSION["logged_in"] = true;
 
-            print "Hi there, ".$_SESSION["username"];
+            // print "Hi there, ".$_SESSION["username"];
         }
     }
 
@@ -70,113 +70,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PHP Simple Login</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
 
     <?php if(isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] === true) : ?>
-    
-        <h1>Welcome <?php print $_SESSION["username"]; ?></h1>
+        
+        <img id="logo" src="img/Logo.svg" alt="">
+        <header id="welcome-box">
+            <h1>Welcome <?php print $_SESSION["username"]; ?></h1>
+            <a href="logout.php">Log out</a>
+        </header>
 
         <p id="messages">l o a d i n g</p>
 
         <form id="msg-box"> <!-- action="views/chat.php?post" method="post" -->
             <input type="text" placeholder="type a message" name="msg">
-            <input type="submit" value="Post it!">
+            <input type="submit" value=""> <!-- value="Post it!" -->
         </form>
 
         <script>
-
-            const myMessages = document.querySelector("#messages");
-
-            let lastMsgId = 0;
-            /**
-             * Load ALL messages
-             */
-
-            //let msgData; 
-            function loadMessages() {
-                fetch("views/chat.php?loadAll")
-                .then((result) => result.json())
-                .then((data) => {
-                    console.log(data);
-                    //msgData = data;
-                    myMessages.innerHTML = "";
-
-                    data.forEach(element => {
-                        let msgBox = `
-                            <span class="msg" data-id="${element.id}">
-                                ${element.message}<br>
-                                <i>${element.uname}</i>
-                            </span>
-                            <br>
-                        `;
-                        myMessages.innerHTML += msgBox;
-                    });
-
-                    lastMsgId = data[data.length-1].id;
-
-                    
-                });
-            }
-            loadMessages();
-
-            /**
-             * Sending A message
-             */
-
-             const chatForm = document.getElementById("msg-box");
-
-             chatForm.addEventListener("submit", (event) => {
-                event.preventDefault();
-
-                let chatFormData = new FormData(chatForm);
-
-                fetch("views/chat.php?post", {body: chatFormData, method: "POST"})
-                  .then((res) => {
-                    refreshMessages();
-                  });
-
-                chatForm.reset();
-             });
-
-             /**
-              * Refreshing the messages
-              */
-
-             function refreshMessages() {
-
-                let refreshFormData = new FormData();
-                refreshFormData.set('lastMsgId', lastMsgId);
-
-                fetch("views/chat.php?resfreshMessages", {body: refreshFormData, method: "POST"})
-                  .then((res) => res.json())
-                  .then((data) => {
-                    console.log(data);
-
-                    data.forEach(element => {
-                        let msgBox = `
-                            <span class="msg" data-id="${element.id}">
-                                ${element.message}<br>
-                                <i>${element.uname}</i>
-                            </span>
-                            <br>
-                        `;
-                        myMessages.innerHTML += msgBox;
-                    });
-
-                    lastMsgId = data[data.length-1].id;
-                  });
-
-             }
-
-
-
-
-
+            window.myUserId = <?php echo($_SESSION["id"]); ?>;
         </script>
+        <script src="js/actions.js" defer></script>
 
-        <a href="logout.php">Log me out</a>
+        
     
     <?php elseif($_SERVER['REQUEST_METHOD'] == "POST") : ?>
 

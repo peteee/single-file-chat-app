@@ -1,0 +1,100 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html{
+    scroll-behavior: smooth;
+}
+
+body{
+    background: #9EBA81;
+    font-size: 22px;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 0 18px;
+}
+
+#messages{
+    padding: 20px;
+    background: #ECECEC;
+    padding-bottom: 140px;
+}
+
+
+#welcome-box{
+    font-size: 14px;
+    width: 150px;
+    height: 50px;
+    position: absolute;
+    top:0px;
+    right: 0px;
+    background-color: rgba(0, 0, 0, 0.096);
+    padding: 10px;
+}
+#welcome-box h1{
+    font-size: 16px;
+}
+
+#logo{
+    position: relative;
+    top:4px;
+    left: 10px;
+}
+
+#msg-box{
+    background: white;
+    width: 100vw;
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    height: 73px;
+    padding: 18px;
+}
+
+input[type=text], input[type=password] {
+    background: #E7EEDF;
+    padding: 12px;
+    border: none;
+    font-size: 18px;
+    /* margin-right: 9px; */
+    width: calc(100% - 80px);
+    margin: 0 10px 10px 0;
+}
+
+#msg-box input[type=submit] {
+    height: 46px;
+    width: 46px;
+    border: none;
+    padding: 5px;
+    background: #D9D9D9 url("../img/🦆 icon _paper plane_.svg") no-repeat -6px -4px;
+}
+
+#msg-box input[type=text] {
+    position: relative;
+    top:-19px;
+}
+
+.msg {
+    width: 260px;
+    background: #9EBA81;
+    padding: 10px;
+    margin-bottom: 10px;
+    display: block;
+    /* min-height: 60px; */
+    padding-bottom: 0px;
+}
+.msg i {
+    position: relative;
+    top: 24px;
+    font-size: 16px;
+    left: -10px;
+}
+
+/* .me{} */
+
+.they {
+    background: #97C5BA;
+    position: relative;
+    right: calc(-100% + 260px);
+}

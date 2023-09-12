@@ -114,7 +114,7 @@ class Chat {
     public function RefreshMessages($lastMsgId) {
         require_once("../db/db.php");
 
-        $r_array[] = [];
+        $r_array = [];
 
         if($db) {
             $sql = "SELECT * FROM zjhu5_messages WHERE zjhu5_messages.id > ?;";
